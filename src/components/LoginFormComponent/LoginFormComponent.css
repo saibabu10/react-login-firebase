@@ -15,7 +15,7 @@
     font-size: 20px;
     margin-bottom: 20px;
 }
-#login-username,
+#login-email,
 #login-password{
     margin-left: 10px;
 }
@@ -45,5 +45,5 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3; /* Example background color on hover */
+    background-color: #0056b3; 
 }

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { database } from '/Users/saibabu/Desktop/html/react-credential-firebase/src/config/fire.js'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import './LoginFormComponent.css';
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -15,8 +17,10 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your login logic here
-    console.log('Logging in with:', { username, password });
+    const checkEmail = email;
+    const checkPassword = password;
+    createUserWithEmailAndPassword(database, checkEmail, checkPassword)
+      .then(data => { console.log(data) });
   };
 
   return (
@@ -24,25 +28,25 @@ function LoginForm() {
       <form className='login-form' onSubmit={handleSubmit}>
         <div className="login-content">
           <h2 className='login-title'>Login Credentials</h2>
-          <label className="login-label" htmlFor="username">
+          <label className="login-label" htmlFor="email">
             Username
-            <input 
+            <input
               type='text'
-              id="login-username"
-              placeholder='Enter username...'
-              value={username}
-              onChange={handleUsernameChange}
+              id="login-email"
+              placeholder='Enter email...'
+              value={email}
+              onChange={handleEmailChange} 
               required
             />
           </label>
-          <label className="login-label"htmlFor="password">
+          <label className="login-label" htmlFor="password">
             Password
-            <input 
+            <input
               type='password'
               id="login-password"
               placeholder='Enter password...'
               value={password}
-              onChange={handlePasswordChange}
+              onChange={handlePasswordChange} 
               required
             />
           </label>
