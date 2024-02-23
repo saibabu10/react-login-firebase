@@ -15,12 +15,16 @@
     font-size: 20px;
     margin-bottom: 20px;
 }
-
-label {
+#login-username,
+#login-password{
+    margin-left: 10px;
+}
+.login-label {
     display: flex;
     justify-content: space-evenly;
-    align-items: center;
+    align-items: baseline;
     margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 input[type="text"],
@@ -28,6 +32,7 @@ input[type="password"] {
     padding: 8px; 
     border: 1px solid #ccc; 
     border-radius: 4px;
+    outline: none;
 }
 
 button[type="submit"] {

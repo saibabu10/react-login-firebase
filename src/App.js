@@ -1,6 +1,6 @@
 import './App.css';
-import LoginFormComponent from './components/LoginFormComponent'
-import RegisterFormComponent from './components/RegisterFormComponent'
+import LoginFormComponent from './components/LoginFormComponent/LoginFormComponent'
+import RegisterFormComponent from './components/RegisterFormComponent/RegisterFormComponent'
 function App() {
   return (
     <div className="App">
