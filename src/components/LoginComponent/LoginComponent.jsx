@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {auth} from '../../config/fire'
 function LoginComponent() {
     const [values, setValues] = useState({
         email: "",
@@ -14,6 +15,11 @@ function LoginComponent() {
 
     function handleSubmission(e) {
         console.log(values);
+        createUserWithEmailAndPassword(auth,values.email,values.password)
+        .then(res=>{console.log(res)})
+        .catch((error)=> {
+            console.log(error);
+        });
         e.preventDefault();
     }
 
