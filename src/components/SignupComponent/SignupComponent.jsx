@@ -1,38 +1,53 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-
-import React from 'react'
-import {Link} from 'react-router-dom'
 function SignupComponent() {
-  return (
-    <div>
-        <h1>Signup</h1>
-        <form> 
-            <label>First Name</label>
-            <br/>
-            <input type='text' placeholder='Enter the FirstName'/>
-            <br/>
-            <label>Last Name</label>
-            <br/>
-            <input type='text' placeholder='Enter the LastName'/>
-            <br/>
-            <label>Email</label>
-            <br/>
-            <input type='text' placeholder='Enter the Email'/>
-            <br/>
-            <label>Password</label>
-            <br/>
-            <input type='password' placeholder='Enter the Password'/>
-            <br/>
-            <label>Comfirm Password</label>
-            <br/>
-            <input type='password' placeholder='Enter the Confirm Password'/>
-            <br/>
-            Already have a Account? <Link to="/Login">Login</Link>
-            <br/>
-            <button>Signup</button>
-        </form>
-    </div>
-  )
+    const [values, setValues] = useState({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirmPass: ""
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: value
+        }));
+    };
+
+    return (
+        <div>
+            <h1>Signup</h1>
+            <form>
+                <label>First Name</label>
+                <br/>
+                <input type='text' name='firstname' placeholder='Enter the FirstName' onChange={handleChange}/>
+                <br/>
+                <label>Last Name</label>
+                <br/>
+                <input type='text' name='lastname' placeholder='Enter the LastName' onChange={handleChange}/>
+                <br/>
+                <label>Email</label>
+                <br/>
+                <input type='text' name='email' placeholder='Enter the Email' onChange={handleChange}/>
+                <br/>
+                <label>Password</label>
+                <br/>
+                <input type='password' name='password' placeholder='Enter the Password' onChange={handleChange}/>
+                <br/>
+                <label>Confirm Password</label>
+                <br/>
+                <input type='password' name='confirmPass' placeholder='Enter the Confirm Password' onChange={handleChange}/>
+                <br/>
+                Already have an account? <Link to="/login">Login</Link>
+                <br/>
+                <button>Signup</button>
+            </form>
+        </div>
+    );
 }
 
-export default SignupComponent
+export default SignupComponent;
