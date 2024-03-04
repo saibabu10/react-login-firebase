@@ -9,7 +9,7 @@ function SignupComponent() {
         password: "",
         confirmPass: ""
     });
-
+    const[errorMsg,setErrorMsg] = useState("")
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValues(prevValues => ({
@@ -17,6 +17,10 @@ function SignupComponent() {
             [name]: value
         }));
     };
+    function handleSubmission(e){
+        e.preventDefault();
+        console.log(values)
+    }
 
     return (
         <div>
@@ -44,7 +48,7 @@ function SignupComponent() {
                 <br/>
                 Already have an account? <Link to="/login">Login</Link>
                 <br/>
-                <button>Signup</button>
+                <button onClick={handleSubmission}>Signup</button>
             </form>
         </div>
     );
