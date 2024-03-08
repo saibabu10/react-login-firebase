@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import './SignupComponent.css'
 import { createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
 import { auth } from '../../config/fire';
@@ -30,11 +30,11 @@ function SignupComponent() {
        }
        setSubmitButtonDisabled(true);
        createUserWithEmailAndPassword(auth,values.email,values.password)
-       .then(res=>
+       .then(async(res)=>
         {
             setSubmitButtonDisabled(false)
             const user = res.user;
-            updateProfile(user,{
+            await updateProfile(user,{
                 displayName: values.firstname+" "+values.lastname
             })
             console.log(user)
