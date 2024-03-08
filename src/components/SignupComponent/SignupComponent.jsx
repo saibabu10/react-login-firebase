@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import './SignupComponent.css'
 function SignupComponent() {
     const [values, setValues] = useState({
         firstname: "",
@@ -10,6 +10,7 @@ function SignupComponent() {
         confirmPass: ""
     });
     const[errorMsg,setErrorMsg] = useState("")
+
     const handleChange = (event) => {
         const { name, value } = event.target;
         setValues(prevValues => ({
@@ -19,7 +20,11 @@ function SignupComponent() {
     };
     function handleSubmission(e){
         e.preventDefault();
-        console.log(values)
+       if(!values.firstname || !values.lastname || !values.email || !values.password || !values.confirmPass)
+       {
+        setErrorMsg('Fill all fields');
+        return;
+       }
     }
 
     return (
@@ -48,6 +53,7 @@ function SignupComponent() {
                 <br/>
                 Already have an account? <Link to="/login">Login</Link>
                 <br/>
+                <div className='errormsg'>{errorMsg}</div>
                 <button onClick={handleSubmission}>Signup</button>
             </form>
         </div>
