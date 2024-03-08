@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SignupComponent.css'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../config/fire';
 function SignupComponent() {
     const [values, setValues] = useState({
         firstname: "",
@@ -25,6 +27,9 @@ function SignupComponent() {
         setErrorMsg('Fill all fields');
         return;
        }
+       createUserWithEmailAndPassword(auth,values.email,values.password)
+       .then(res=>console.log(res))
+       .catch(err=>console.log("Error-",err))
     }
 
     return (
