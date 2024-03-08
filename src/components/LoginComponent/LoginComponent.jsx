@@ -1,46 +1,72 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {createUserWithEmailAndPassword} from 'firebase/auth'
-import {auth} from '../../config/fire'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from '../../config/fire';
+
 function LoginComponent() {
-    const [values, setValues] = useState({
-        email: "",
-        password: ""
-    });
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
+    email: "",
+    pass: "",
+  });
+  const [errorMsg, setErrorMsg] = useState("");
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
-    function handleChange(event) {
-        const { name, value } = event.target;
-        setValues(prevValues => ({ ...prevValues, [name]: value }));
+  const handleSubmission = () => {
+    if (!values.email || !values.pass) {
+      setErrorMsg("Fill all fields");
+      return;
     }
+    setErrorMsg("");
 
-    function handleSubmission(e) {
-        console.log(values);
-        createUserWithEmailAndPassword(auth,values.email,values.password)
-        .then(res=>{console.log(res)})
-        .catch((error)=> {
-            console.log(error);
-        });
-        e.preventDefault();
-    }
-
-    return (
-        <div>
+    setSubmitButtonDisabled(true);
+    signInWithEmailAndPassword(auth, values.email, values.pass)
+      .then(async (res) => {
+        setSubmitButtonDisabled(false);
+        
+        navigate("/");
+      })
+      .catch((err) => {
+        setSubmitButtonDisabled(false);
+        setErrorMsg(err.message);
+      });
+  };
+  return (
+        <div >
+          <div >
             <h1>Login</h1>
-            <form>
-                <label>Email</label>
-                <br />
-                <input type='text' name='email' placeholder='Enter the Email' onChange={handleChange} />
-                <br />
-                <label>Password</label>
-                <br />
-                <input type='password' name='password' placeholder='Enter the Password' onChange={handleChange} />
-                <br />
-                Already have an Account? <Link to="/signup">Signup</Link>
-                <br />
-                <button onClick={handleSubmission}>Login</button>
-            </form>
+    
+            <input
+              label="Email"
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, email: event.target.value }))
+              }
+              placeholder="Enter email address"
+            />
+            <input
+              label="Password"
+              onChange={(event) =>
+                setValues((prev) => ({ ...prev, pass: event.target.value }))
+              }
+              placeholder="Enter Password"
+            />
+    
+            <div>
+              <b>{errorMsg}</b>
+              <button disabled={submitButtonDisabled} onClick={handleSubmission}>
+                Login
+              </button>
+              <p>
+                Already have an account?{" "}
+                <span>
+                  <Link to="/signup">Sign up</Link>
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
-    );
-}
+  )
+    }
+    
 
 export default LoginComponent;

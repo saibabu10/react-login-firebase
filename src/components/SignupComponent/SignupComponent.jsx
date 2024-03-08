@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
 import './SignupComponent.css'
 import { createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
 import { auth } from '../../config/fire';
 function SignupComponent() {
+    const navigate = useNavigate();
     const [values, setValues] = useState({
         firstname: "",
         lastname: "",
@@ -37,6 +38,7 @@ function SignupComponent() {
             await updateProfile(user,{
                 displayName: values.firstname+" "+values.lastname
             })
+            navigate("/");
             console.log(user)
         })
        .catch(err=>{
