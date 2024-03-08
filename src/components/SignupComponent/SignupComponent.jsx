@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SignupComponent.css'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
 import { auth } from '../../config/fire';
 function SignupComponent() {
     const [values, setValues] = useState({
@@ -33,7 +33,11 @@ function SignupComponent() {
        .then(res=>
         {
             setSubmitButtonDisabled(false)
-            console.log(res)
+            const user = res.user;
+            updateProfile(user,{
+                displayName: values.firstname+" "+values.lastname
+            })
+            console.log(user)
         })
        .catch(err=>{
         setSubmitButtonDisabled(false)
