@@ -12,6 +12,7 @@ function SignupComponent() {
         confirmPass: ""
     });
     const[errorMsg,setErrorMsg] = useState("")
+    const[submitButtonDisabled,setSubmitButtonDisabled] = useState(false);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -21,15 +22,23 @@ function SignupComponent() {
         }));
     };
     function handleSubmission(e){
-        e.preventDefault();
+        // e.preventDefault();
        if(!values.firstname || !values.lastname || !values.email || !values.password || !values.confirmPass)
        {
         setErrorMsg('Fill all fields');
         return;
        }
+       setSubmitButtonDisabled(true);
        createUserWithEmailAndPassword(auth,values.email,values.password)
-       .then(res=>console.log(res))
-       .catch(err=>console.log("Error-",err))
+       .then(res=>
+        {
+            setSubmitButtonDisabled(false)
+            console.log(res)
+        })
+       .catch(err=>{
+        setSubmitButtonDisabled(false)
+        setErrorMsg(err.message)
+    })
     }
 
     return (
@@ -59,7 +68,7 @@ function SignupComponent() {
                 Already have an account? <Link to="/login">Login</Link>
                 <br/>
                 <div className='errormsg'>{errorMsg}</div>
-                <button onClick={handleSubmission}>Signup</button>
+                <button onClick={handleSubmission} disabled={submitButtonDisabled}>Signup</button>
             </form>
         </div>
     );
